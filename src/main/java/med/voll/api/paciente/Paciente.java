@@ -6,7 +6,7 @@ import med.voll.api.medico.Endereco;
 import med.voll.api.paciente.DadosCadastroPaciente;
 
 @Entity(name = "Paciente")
-@Table(name = "pacientes")
+@Table(name = "paciente")
 @Getter
 @Setter
 @NoArgsConstructor
