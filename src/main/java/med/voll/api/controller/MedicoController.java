@@ -1,10 +1,7 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
-import med.voll.api.medico.DadosCadastroMedicos;
-import med.voll.api.medico.DadosListagemMedicos;
-import med.voll.api.medico.Medico;
-import med.voll.api.medico.MedicoRepository;
+import med.voll.api.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,18 +23,23 @@ public class MedicoController {
     public void cadastrar(@RequestBody @Valid DadosCadastroMedicos dados) {
         repository.save(new Medico(dados));
     }
-//usando list o findAll()devolve uma list de medicos, por isso precisa fazer a conversao chamando o .stream(java8) fazendo .map mapeamento de medico p dadosListagem
+
+    //usando list o findAll()devolve uma list de medicos, por isso precisa fazer a conversao chamando o .stream(java8) fazendo .map mapeamento de medico p dadosListagem
 //DadosListagemMedicos::new chama o construtor da classe DaddosListagem
     //.toList() converte tudo p lista
     //com page nao precisa do stream, pq o findAll devolve um page e o page ja tem o metodo map diretamente, tbm nao precisa de tolist pq o map ja faz a convercao
     @GetMapping
-    public Page<DadosListagemMedicos> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao){
+    public Page<DadosListagemMedicos> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         return repository.findAll(paginacao).map(DadosListagemMedicos::new);
     }
 
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizacaoMedico dados) {
+        var medico = repository.getReferenceById(dados.id());
+        medico.atualizarInformacoes(dados);
 
-
-
+    }
 
 
 }
