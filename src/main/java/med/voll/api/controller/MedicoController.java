@@ -42,8 +42,10 @@ public class MedicoController {
 
     //parametro dinamico/ p passar o numero do id// PathVariable pega o parameto dinamico
     @DeleteMapping("/{id}")
+    @Transactional
     public void excluir(@PathVariable Long id) {
-        repository.deleteById(id);
+    var medico = repository.getReferenceById(id);
+    medico.excluir();
     }
 
 
