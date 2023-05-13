@@ -32,4 +32,11 @@ public class PacienteController {
         paciente.atualizacaoEnderecoPac(dados);
 
     }
+
+    @Transactional
+    @DeleteMapping("/{id}")
+    public void excluir(@PathVariable Long id){
+        var paciente = repository.getReferenceById(id);
+        paciente.excluir();
+    }
 }

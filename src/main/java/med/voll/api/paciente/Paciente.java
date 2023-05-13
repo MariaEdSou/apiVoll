@@ -20,10 +20,12 @@ public class Paciente {
     private String nome;
     private String email;
     private String telefone;
+    private boolean pendente = true;
     @Embedded
     private Endereco endereco;
 
     public Paciente(DadosCadastroPaciente dados) {
+        this.pendente = true;
         this.nome = dados.nome();
         this.email = dados.email();
         this.telefone = dados.telefone();
@@ -44,5 +46,9 @@ public class Paciente {
         if (dados.enderecoPaciente() != null) {
           this.endereco.atualizarInformacoesPac(dados.enderecoPaciente());
         }
+    }
+
+    public void excluir() {
+        this.pendente = false;
     }
 }
