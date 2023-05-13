@@ -30,7 +30,7 @@ public class MedicoController {
     //com page nao precisa do stream, pq o findAll devolve um page e o page ja tem o metodo map diretamente, tbm nao precisa de tolist pq o map ja faz a convercao
     @GetMapping
     public Page<DadosListagemMedicos> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        return repository.findAll(paginacao).map(DadosListagemMedicos::new);
+        return repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedicos::new);
     }
 
     @PutMapping
