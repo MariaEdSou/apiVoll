@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import med.voll.api.endereco.DadosEndereco;
+import med.voll.api.endereco.DadosEnderecoPaciente;
 
 @Embeddable
 @Getter
@@ -61,6 +62,31 @@ public class Endereco {
         }
         if (complemento != null) {
             this.complemento = dados.complemento();
+        }
+
+    }
+
+    public void atualizarInformacoesPac(DadosEnderecoPaciente enderecoPaciente) {
+        if (logradouro != null) {
+            this.logradouro = enderecoPaciente.logradouro();
+        }
+        if (bairro != null) {
+            this.bairro = enderecoPaciente.bairro();
+        }
+        if (cep != null) {
+            this.cep = enderecoPaciente.cep();
+        }
+        if (uf != null) {
+            this.uf = enderecoPaciente.uf();
+        }
+        if (cidade != null) {
+            this.cidade = enderecoPaciente.cidade();
+        }
+        if (numero != null) {
+            this.numero = enderecoPaciente.numero();
+        }
+        if (complemento != null) {
+            this.complemento = enderecoPaciente.complemento();
         }
 
     }
