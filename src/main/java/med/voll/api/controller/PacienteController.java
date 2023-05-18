@@ -1,6 +1,7 @@
 package med.voll.api.controller;
 
 import jakarta.validation.Valid;
+import med.voll.api.medico.DadosDetalhamentoMedico;
 import med.voll.api.paciente.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,7 +41,6 @@ public class PacienteController {
 
     }
 
-
     @DeleteMapping("/{id}")
     @Transactional
     public ResponseEntity excluir(@PathVariable Long id){
@@ -48,4 +48,5 @@ public class PacienteController {
         paciente.excluir();
         return ResponseEntity.noContent().build();
     }
+
 }
