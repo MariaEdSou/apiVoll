@@ -1,4 +1,4 @@
-package med.voll.api.medico;
+package med.voll.api.domain.medico;
 
 import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotBlank;
@@ -7,8 +7,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import med.voll.api.endereco.DadosEndereco;
-import med.voll.api.endereco.DadosEnderecoPaciente;
+import med.voll.api.domain.endereco.DadosEndereco;
+import med.voll.api.domain.endereco.DadosEnderecoPaciente;
 
 @Embeddable
 @Getter
