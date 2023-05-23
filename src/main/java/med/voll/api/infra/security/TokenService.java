@@ -1,0 +1,37 @@
+package med.voll.api.infra.security;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import med.voll.api.domain.usuario.Usuario;
+import org.springframework.stereotype.Service;
+
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
+@Service
+public class TokenService {
+//HMAC256 algoritimo p fazer assinatura digital do TOKEN
+//withIssuer fala no cod. quem esta gerando o token
+//withSubject pra falart quem e o dono do token
+    public String gerarToken(Usuario usuario) {
+        try {
+            var algoritimo = Algorithm.HMAC256("12345678");
+           return JWT.create()
+                    .withIssuer("API Vol.med")
+                   .withSubject(usuario.getLogin())
+                   .withExpiresAt(dataExpiracao())
+                    .sign(algoritimo);
+        } catch (JWTCreationException exception){
+          throw new RuntimeException("erro ao gerar token jwt", exception);
+        }
+    }
+//Instant DO JAVA 8 DA API DE DATAS
+//ZoneOffset.of p passar o fuso
+//toInstant converter p um objeto instant
+    private Instant dataExpiracao() {
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00"));
+    }
+}
