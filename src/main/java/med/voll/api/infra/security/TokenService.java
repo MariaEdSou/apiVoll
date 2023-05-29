@@ -14,26 +14,42 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
-// fala p spring ler essa variavel la do application.properties
+    // fala p spring ler essa variavel la do application.properties
     @Value("${api.security.token.secret}")
     private String secret;
 
-//HMAC256 algoritimo p fazer assinatura digital do TOKEN
+    //HMAC256 algoritimo p fazer assinatura digital do TOKEN
 //withIssuer fala no cod. quem esta gerando o token
-//withSubject pra falart quem e o dono do token
+//withSubject pra falar quem e o dono do token
     public String gerarToken(Usuario usuario) {
         try {
             var algoritimo = Algorithm.HMAC256(secret);
-           return JWT.create()
+            return JWT.create()
                     .withIssuer("API Vol.med")
-                   .withSubject(usuario.getLogin())
-                   .withExpiresAt(dataExpiracao())
+                    .withSubject(usuario.getLogin())
+                    .withExpiresAt(dataExpiracao())
                     .sign(algoritimo);
-        } catch (JWTCreationException exception){
-          throw new RuntimeException("erro ao gerar token jwt", exception);
+        } catch (JWTCreationException exception) {
+            throw new RuntimeException("erro ao gerar token jwt", exception);
         }
     }
-//Instant DO JAVA 8 DA API DE DATAS
+
+    public String getSubject(String tokenJWT) {
+        try {
+            var algoritimo = Algorithm.HMAC256(secret);
+            return JWT.require(algoritimo)
+                    .withIssuer("API Vol.med")
+                    .build()
+                    .verify(tokenJWT)
+                    .getSubject();
+
+        } catch (JWTCreationException exception) {
+            throw new RuntimeException("Token JWT invalido ou expirado");
+        }
+
+    }
+
+    //Instant DO JAVA 8 DA API DE DATAS
 //ZoneOffset.of p passar o fuso
 //toInstant converter p um objeto instant
     private Instant dataExpiracao() {

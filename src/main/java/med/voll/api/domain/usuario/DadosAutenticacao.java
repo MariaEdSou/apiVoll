@@ -1,5 +1,7 @@
 package med.voll.api.domain.usuario;
 
-public record DadosAutenticacao(String login, String senha) {
+import jakarta.validation.constraints.NotEmpty;
+
+public record DadosAutenticacao(@NotEmpty String login, @NotEmpty String senha) {
 
 }

@@ -22,13 +22,15 @@ public class AutenticacaoController {
     @Autowired
     private TokenService tokenService;
 
-// authentication.getPrincipalp pegar o usuario logado
+    // authentication.getPrincipalp pegar o usuario logado
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid DadosAutenticacao dados) {
         var autenticationtoken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
         var authentication = manager.authenticate(autenticationtoken);
-        var tokenJWT =  tokenService.gerarToken((Usuario) authentication.getPrincipal());
+        var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+        System.out.println(tokenJWT);
 
         return ResponseEntity.ok(new DadosTokenJWT(tokenJWT));
+
     }
 }

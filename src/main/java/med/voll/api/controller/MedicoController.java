@@ -23,7 +23,7 @@ public class MedicoController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedicos dados, UriComponentsBuilder uriBuilder) {
-       var medico = new Medico(dados);
+        var medico = new Medico(dados);
         repository.save(medico);
         var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
         return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
@@ -35,7 +35,7 @@ public class MedicoController {
     //com page nao precisa do stream, pq o findAll devolve um page e o page ja tem o metodo map diretamente, tbm nao precisa de tolist pq o map ja faz a convercao
     @GetMapping
     public ResponseEntity<Page<DadosListagemMedicos>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
-        var page =  repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedicos::new);
+        var page = repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedicos::new);
         return ResponseEntity.ok(page);
 
     }
@@ -59,8 +59,9 @@ public class MedicoController {
 
         return ResponseEntity.noContent().build();
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity detalhar(@PathVariable Long id){
+    public ResponseEntity detalhar(@PathVariable Long id) {
         var medico = repository.getReferenceById(id);
         return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     }
