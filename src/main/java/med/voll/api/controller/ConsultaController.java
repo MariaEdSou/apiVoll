@@ -3,6 +3,7 @@ package med.voll.api.controller;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import med.voll.api.consulta.DadosAgendamentoConsulta;
+import med.voll.api.domain.consulta.DadosDetalhamentoConsulta;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
