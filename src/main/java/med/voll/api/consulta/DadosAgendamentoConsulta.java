@@ -13,6 +13,6 @@ public record DadosAgendamentoConsulta(
         long idPaciente,
         @NotNull
         @Future
-        LocalDateTime date
+        LocalDateTime data
 ) {
 }
