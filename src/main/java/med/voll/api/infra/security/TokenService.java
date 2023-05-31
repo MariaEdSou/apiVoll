@@ -14,6 +14,9 @@ import java.time.ZoneOffset;
 
 @Service
 public class TokenService {
+
+    public static final String ISSUER = "API Vol.med";
+
     // fala p spring ler essa variavel la do application.properties
     @Value("${api.security.token.secret}")
     private String secret;
@@ -25,7 +28,7 @@ public class TokenService {
         try {
             var algoritimo = Algorithm.HMAC256(secret);
             return JWT.create()
-                    .withIssuer("API Vol.med")
+                    .withIssuer(ISSUER)
                     .withSubject(usuario.getLogin())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritimo);
@@ -38,11 +41,10 @@ public class TokenService {
         try {
             var algoritimo = Algorithm.HMAC256(secret);
             return JWT.require(algoritimo)
-                    .withIssuer("API Vol.med")
+                    .withIssuer(ISSUER)
                     .build()
                     .verify(tokenJWT)
                     .getSubject();
-
         } catch (JWTCreationException exception) {
             throw new RuntimeException("Token JWT invalido ou expirado");
         }

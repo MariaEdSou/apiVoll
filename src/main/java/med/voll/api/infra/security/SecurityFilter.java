@@ -31,13 +31,16 @@ public class SecurityFilter extends OncePerRequestFilter {
 //SecurityContextHolder.getContext().setAuthentication(); p spring fazer a autenticacao do usuario na requisicao
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("CHAMANDO FILTRO");
         var tokenJWT = recuperarToken(request);
+
         if (tokenJWT != null) {
             var subject = tokenService.getSubject(tokenJWT);
             var ususario = repository.findByLogin(subject);
-            var autentication = new UsernamePasswordAuthenticationToken(ususario, null, ususario.getAuthorities());
 
+            var autentication = new UsernamePasswordAuthenticationToken(ususario, null, ususario.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(autentication);
+            System.out.println("LOGADO NA REQUISICAO");
 
         }
         filterChain.doFilter(request, response);
@@ -47,7 +50,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     private String recuperarToken(HttpServletRequest request) {
         var authorizationHeader = request.getHeader("Authorization");
         if (authorizationHeader != null) {
-            return authorizationHeader.replace("Bearer", "");
+            return authorizationHeader.replace("Bearer ", "");
         }
         return null;
     }
