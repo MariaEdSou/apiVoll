@@ -2,6 +2,7 @@ package med.voll.api.domain.consulta;
 
 import jakarta.persistence.*;
 import lombok.*;
+import med.voll.api.consulta.MotivoCancelamento;
 import med.voll.api.domain.medico.Medico;
 import med.voll.api.domain.paciente.Paciente;
 
@@ -26,6 +27,10 @@ public class Consulta {
     @JoinColumn(name = "paciente_id")
     private Paciente paciente;
     private LocalDateTime data;
+    MotivoCancelamento motivoCancelamento;
 
+    public void cancelar(MotivoCancelamento motivo) {
+        this.motivoCancelamento = motivo;
+    }
 }
 
