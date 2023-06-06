@@ -20,6 +20,7 @@ public class Paciente {
     private String email;
     private String telefone;
     private boolean pendente = true;
+
     @Embedded
     private Endereco endereco;
 

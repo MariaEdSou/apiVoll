@@ -2,7 +2,7 @@ package med.voll.api.domain.consulta.validacoes;
 
 import med.voll.api.consulta.DadosAgendamentoConsulta;
 import med.voll.api.domain.ValidacaoException;
-import med.voll.api.domain.paciente.PacienteRepository;
+import med.voll.api.domain.consulta.ConsultaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class ValidadorPacienteSemOutraConsultaNoDia implements ValidadaorAgendamentoDeConsulta {
 
     @Autowired
-    private PacienteRepository repository;
+    private ConsultaRepository repository;
 
     public void validar(DadosAgendamentoConsulta dados) {
         var primeiroHorario = dados.data().withHour(7);

@@ -28,7 +28,7 @@ public class AgendaDeConsultas {
 //!pacienteRepository.existsById(dados.idPaciente()) verificando se o id passado existe no banco
 //linha 28 verificando se o id do medico existe e se ele e diferente de null se estiver vindo o id ele faz a outra verificacao/ id opcional
 
-    public void agendar(DadosAgendamentoConsulta dados) {
+    public DadosDetalhamentoConsulta agendar(DadosAgendamentoConsulta dados) {
         if (!pacienteRepository.existsById(dados.idPaciente())) {
             throw new ValidacaoException("Id paciente informado nao existe!");
         }
@@ -41,16 +41,21 @@ public class AgendaDeConsultas {
 
         var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         var medico = escolherMedico(dados);
+        if (medico == null) {
+            throw new ValidacaoException("Nao existe medico disponivel nessa data!");
+        }
+
         var consulta = new Consulta(null, medico, paciente, dados.data(), null);
         consultaRepository.save(consulta);
 
+        return new DadosDetalhamentoConsulta(consulta);
     }
 
     private Medico escolherMedico(DadosAgendamentoConsulta dados) {
         if (dados.idMedico() != null) {
             return medicoRepository.getReferenceById(dados.idMedico());
         }
-        if (dados.especialidade() != null) {
+        if (dados.especialidade() == null) {
             throw new ValidacaoException("Especialidade e obrigatoria quando medico nao for escolhido! ");
         }
         return medicoRepository.escolherMedicoAleatorioLivreNaData(dados.especialidade(), dados.data());
