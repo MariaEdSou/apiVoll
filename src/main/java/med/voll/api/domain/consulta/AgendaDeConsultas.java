@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
+
 @Service
 public class AgendaDeConsultas {
 
@@ -43,13 +46,12 @@ public class AgendaDeConsultas {
 
         var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         var medico = escolherMedico(dados);
-        if (medico == null) {
+        if (isNull(medico)) {
             throw new ValidacaoException("Nao existe medico disponivel nessa data!");
         }
 
         var consulta = new Consulta(null, medico, paciente, dados.data(), null);
         consultaRepository.save(consulta);
-
         return new DadosDetalhamentoConsulta(consulta);
     }
 
