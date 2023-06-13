@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import med.voll.api.domain.endereco.DadosEndereco;
 
-public record DadosCadastroMedicos(
+public record DadosCadastroMedico(
         @NotBlank(message = "Nome e obrigatorio!")
         String nome,
         @NotBlank(message = "Email e obrigatorio!")

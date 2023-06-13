@@ -13,7 +13,7 @@ public record DadosCadastroPaciente(
         @NotBlank
         @Email
         String email,
-        @Valid
+        String cpf, @Valid
         DadosEndereco endereco
 
 ) {

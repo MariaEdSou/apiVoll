@@ -24,7 +24,7 @@ public class MedicoController {
     //UriComponentsBuilder uriBuilderfaz a construcao da uri p ser passada no retorno
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedicos dados, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dados, UriComponentsBuilder uriBuilder) {
         var medico = new Medico(dados);
         repository.save(medico);
         var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri();
